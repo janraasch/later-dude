@@ -1,0 +1,8 @@
+Later Dude
+----------
+
+Widget for Mac OS X's Dashboard.
+Drop files/folders and links from your desktop on this widget.
+The widget will remember the URI information dropped, and make it available
+to be clicked (to open the referenced item with its default application)
+and to be dragged again with the URI information attached.
