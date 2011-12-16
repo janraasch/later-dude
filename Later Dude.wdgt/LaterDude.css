@@ -1,0 +1,338 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+
+/*
+  CSS 4 the FRONT
+*/
+#front {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  /*
+    Dimensions of Default.png/front.png/back.png.
+  */
+  width: 400px;
+  height: 200px;
+  background: url(Images/front.png) no-repeat 0 0;
+}
+
+
+/*
+  This wraps #scrollArea div and #scrollbar div.
+*/
+#scroll-wrapper {
+  position: absolute;
+  top: 25px;
+  left: -10px;
+}
+
+#scroll-area{
+  float: left;
+  white-space: nowrap;
+  width: 348px; /* Yes, exactly 348px says my eye... :D */
+  /*
+    Height matches #scroll height.
+    Crucial for Apple Scrollbar.
+  */
+  height: 145px;
+}
+
+#scrollbar {
+  float: left;
+  /*
+    Height matches #scroll height.
+    Crucial for Apple Scrollbar.
+  */
+  height: 145px;/* Crucial for Apple Scrollbar. */
+}
+
+ul {
+  /*
+    Setting margin-top and margin-bottom to 0 is
+    crucial for scrollbar and scrollArea to stay in sync.
+  */
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+#item-list li {
+  /*
+    Padding to make way for
+    the .item-destroy button
+  */
+  padding: 0px 0px 0px 23px;
+  position: relative;
+
+  /*
+    This makes an #item-list li element draggable on the dashboard.
+    Note that we do also need the li element to have the attribute draggable='true'.
+  */
+  -apple-dashboard-region: dashboard-region(control rectangle 0 0 0 0);
+}
+
+  /*
+    Style for the #item-list li element when being dragged.
+  */
+  #item-list li:-webkit-drag {
+    padding: 18px;
+    border-radius: 30px;
+    /*
+      Same color as .item-destroy:NONhover Image background.
+    */
+    background-color: rgb(204,204,204);
+  }
+
+    #item-list li:-webkit-drag .title {
+      width: 270px;
+    }
+
+
+  /*
+    Styling for the actual item, i.e. title, uri, item-destroy button
+  */
+  #item-list .title {
+    float: left;
+    overflow: hidden;
+    color: rgb(0,153,204);
+  }
+
+  #item-list input {
+    padding: 3px;
+      border: 1px solid rgb(0,153,204);
+      outline: none;
+    width:275px;
+  }
+
+  #item-list .uri {
+    clear: left;
+    overflow: hidden;
+    color: rgb(255,255,255);
+  }
+
+  #item-list .item-destroy {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      display: none;
+      cursor: pointer;
+
+      /*
+      height * 2 = height of Destroy.png.
+    */
+      width: 20px;
+      height: 20px;
+      background: url(Images/destroy.png) no-repeat 0 0;
+    }
+
+  #item-list li:hover .item-destroy {
+      display: block;
+    }
+
+    #item-list .item-destroy:hover {
+      background-position: 0 -20px;
+    }
+
+
+#info-button {
+  position: absolute;
+  bottom: 19px;
+  left: 17px;
+
+  /*
+    Dimensions of info-button.png/info-button-rollie.png.
+  */
+  width: 13px;
+  height: 13px;
+  background: url(Images/info-button.png);
+  opacity: 0;
+}
+
+#info-button-rollie {
+  position: absolute;
+  bottom: 19px;
+  left: 17px;
+
+  /*
+    Dimensions of info-button.png/info-button-rollie.png.
+  */
+  width: 13px;
+  height: 13px;
+  opacity: 0.25;
+}
+
+  #info-button-rollie:hover {
+    background: url(Images/info-button-rollie.png);
+  }
+
+
+#activity-indicator {
+  opacity: 0.6;
+  position: absolute;
+  bottom: 15px;
+  left: 192px;
+  -webkit-margin-top-collapse: separate;
+  -webkit-margin-bottom-collapse: separate;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+
+  /*
+    Added by *front* view's `addOne()` using `jQuery.css(),
+    so that it can be removed by `laterDude.showBack()` using `jQuery.css().
+
+    -webkit-animation-name: activity-indicator;
+  */
+
+  width:15px;
+  height:15px;
+}
+
+    @-webkit-keyframes activity-indicator {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    8.32% {
+        -webkit-transform: rotate(0deg);
+    }
+    8.33% {
+        -webkit-transform: rotate(30deg);
+    }
+    16.65% {
+        -webkit-transform: rotate(30deg);
+    }
+    16.66% {
+        -webkit-transform: rotate(60deg);
+    }
+    24.99% {
+        -webkit-transform: rotate(60deg);
+    }
+    25% {
+        -webkit-transform: rotate(90deg);
+    }
+    33.32% {
+        -webkit-transform: rotate(90deg);
+    }
+    33.33% {
+        -webkit-transform: rotate(120deg);
+    }
+    41.65% {
+        -webkit-transform: rotate(120deg);
+    }
+    41.66% {
+        -webkit-transform: rotate(150deg);
+    }
+    49.99% {
+        -webkit-transform: rotate(150deg);
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+    }
+    58.32% {
+        -webkit-transform: rotate(180deg);
+    }
+    58.33% {
+        -webkit-transform: rotate(210deg);
+    }
+    66.65% {
+        -webkit-transform: rotate(210deg);
+    }
+    66.66% {
+        -webkit-transform: rotate(240deg);
+    }
+    74.99% {
+        -webkit-transform: rotate(240deg);
+    }
+    75% {
+        -webkit-transform: rotate(270deg);
+    }
+    83.32% {
+        -webkit-transform: rotate(270deg);
+    }
+    83.33% {
+        -webkit-transform: rotate(300deg);
+    }
+    91.65% {
+        -webkit-transform: rotate(300deg);
+    }
+    91.66% {
+        -webkit-transform: rotate(330deg);
+    }
+    99.99% {
+        -webkit-transform: rotate(330deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+
+#open-all {
+  position: absolute;
+  top: 10px;
+  left: 150px;
+  font: 11px "Lucida Grande";
+
+  /*
+    The color is the same as the background.
+    => Hidden feature :D
+  */
+  color: rgb(235,235,235);
+  cursor: pointer;
+}
+
+
+
+/*
+  CSS 4 the BACK
+*/
+#back {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  /*
+    Dimensions of Default.png/front.png/back.png.
+  */
+  width: 400px;
+  height: 200px;
+  background: url(Images/back.png) no-repeat 0 0;
+  display: none;
+}
+
+
+#done-button {
+  position: absolute;
+  top: 120px;
+  left: 250px;
+  /*
+    Dimensions of done-button.png/done-button-pressed.png.
+  */
+  width: 58px;
+  height: 23px;
+  background: url(Images/done-button.png) no-repeat 0 0;
+}
+
+  #done-button:active {
+    background: url(Images/done-button-clicked.png) no-repeat 0 0;
+  }
+
+
+#version {
+  position: absolute;
+  top: 65px;
+  left: 65px;
+  text-align: center;
+  color: rgb(255,255,255);
+  font-weight: bold;
+  font-size: 10px;
+}
+
+  #version img {
+    display: block;
+  }

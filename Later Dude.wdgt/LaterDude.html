@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>Later Dude 1.0</title>
+
+  <!-- Apple JavaScript classes -->
+  <script src="AppleClasses/AppleScrollArea.js" charset="utf-8"></script>
+  <script src="AppleClasses/AppleScrollbar.js" charset="utf-8"></script>
+  <script src="AppleClasses/AppleFader.js" charset="utf-8"></script>
+
+  <!-- Backbone, jQuery and underscore -->
+  <script src="Scripts/jquery-1.7.1.min.js"></script>
+  <script src="Scripts/underscore-min.js"></script>
+  <script src="Scripts/backbone-min.js"></script>
+
+  <!-- My own shiznit -->
+  <script src="LaterDude.js"></script>
+  <script src="backbone-widget-localstorage.js"></script>
+  <link href="LaterDude.css" rel="stylesheet" type="text/css"/>
+
+</head>
+
+<body>
+
+  <!-- Later Dude Interface -->
+
+  <div id="front">
+
+    <div id="scroll-wrapper">
+      <div id="scroll-area">
+        <ul id="item-list">
+          <!-- See item-template script below -->
+        </ul>
+      </div>
+      <div id="scrollbar"></div>
+    </div>
+
+    <div id="info-button"></div>
+    <div id="info-button-rollie"></div>
+    <div id="open-all">Open All</div>
+    <!-- Inserted by *front* view when `GET`ing an item's title:
+    <img id="activity-indicator" src="Images/activity-indicator.png" alt="Loading...">
+    -->
+
+  </div>
+
+  <div id="back">
+
+    <div id="version">
+      <img src="Images/developed-without.png" alt="Created by Jan Raasch"/>
+      Later Dude 1.0
+    </div>
+    <div id="done-button"></div>
+
+  </div>
+
+  <!-- The item-template script -->
+
+  <script type="text/template" id="item-template">
+    <div class="title"></div>
+    <span class="item-destroy"></span>
+    <div class="uri"></div>
+  </script>
+
+</body>
+
+</html>

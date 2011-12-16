@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AllowNetworkAccess</key>
+	<true/>
+	<key>CFBundleName</key>
+	<string>Later Dude</string>
+	<key>CFBundleDisplayName</key>
+	<string>Later Dude</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFBundleIdentifier</key>
+	<string>de.janpunktde.widget.laterdude</string>
+	<key>BackwardsCompatibleClassLookup</key>
+	<true/>
+	<key>AllowSystem</key>
+	<true/>
+	<key>CloseBoxInsetX</key>
+	<integer>13</integer>
+	<key>CloseBoxInsetY</key>
+	<integer>13</integer>
+	<key>MainHTML</key>
+	<string>LaterDude.html</string>
+</dict>
+</plist>
