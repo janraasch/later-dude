@@ -151,6 +151,18 @@ ul {
   height: 13px;
   background: url(Images/info-button.png);
   opacity: 0;
+
+  /*
+    Webkit CSS Fade-In/Out Animation.
+  */
+  transition-property: opacity;
+  transition-duration: 400ms;
+  -moz-transition-property: opacity;
+  -moz-transition-duration: 400ms;
+  -o-transition-property: opacity;
+  -o-transition-duration: 400ms;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 400ms;
 }
 
 #info-button-rollie {

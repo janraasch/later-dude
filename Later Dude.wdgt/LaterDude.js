@@ -180,11 +180,6 @@ $(function(){
     this.scrollArea = new AppleScrollArea(this.$('#scroll-area')[0])
     this.scrollArea.addScrollbar(this.scrollbar);
 
-    // Add the nice fade-in/out effect to the #info-button i.
-    // We do this "by hand", so we do not depend on AppleClasses
-    // AppleInfoButton.js and AppleAnimatior.js, but only on AppleFader.js.
-    this.infoButtonFader = new Fader(this.$('#info-button')[0],null,400);
-
     // 'reset' Event is triggered by this.collection.fetch() at initialization.
     this.collection.bind('reset', this.onReset, this);
     // Update the scrollbar, if an item has been destroyed.
@@ -200,11 +195,11 @@ $(function(){
     },
 
     showInfoButton : function () {
-      this.infoButtonFader.fadeIn();
+      this.$('#info-button').css('opacity','1.0');
     },
 
     hideInfoButton : function () {
-      this.infoButtonFader.fadeOut();
+      this.$('#info-button').css('opacity','0.0');
     },
 
     // Transitions between widget's *front* and *back* are
@@ -240,7 +235,7 @@ $(function(){
 
       // `mousemove` and `mouseover` are not fired unless user moves cursor after `drop,
       // but the `infoButton should appear, since the cursor was already moved over the widget.
-      this.infoButtonFader.fadeIn();
+      this.showInfoButton();
 
       // Add the spinning wheel.
       this.el.append(
