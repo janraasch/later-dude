@@ -1,5 +1,9 @@
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 380px;
+  height: 180px;
+  border-radius: 12px;
+  box-shadow: 1px 6px 10px rgba(0,0,0,0.3333);
 }
 
 
@@ -16,9 +20,18 @@ body {
   /*
     Dimensions of Default.png/front.png/back.png.
   */
-  width: 400px;
-  height: 200px;
-  background: url(Images/front.png) no-repeat 0 0;
+  width: 390px;
+  height: 190px;
+
+  /*
+    CSS linear-gradient and box-shadow instead of front.png
+  */
+  border-radius: 12px;
+  background-image: linear-gradient(rgb(235,235,235),rgb(157,157,157));
+  background-image: -moz-linear-gradient(rgb(235,235,235),rgb(157,157,157));
+  background-image: -webkit-linear-gradient(rgb(235,235,235),rgb(157,157,157));
+  box-shadow: inset -1px -6px 10px rgba(0,0,0,0.1111);
+  /*background: url(Images/front.png) no-repeat 0 0;*/
 }
 
 
