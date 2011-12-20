@@ -296,6 +296,12 @@ ul {
     }
 }
 
+#resize {
+    position:absolute;
+    bottom: 10px;
+    right: 10px;
+    -apple-dashboard-region: dashboard-region(control rectangle);
+}
 
 #open-all {
   position: absolute;
