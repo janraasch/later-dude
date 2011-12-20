@@ -16,10 +16,6 @@
 	<true/>
 	<key>AllowSystem</key>
 	<true/>
-	<key>CloseBoxInsetX</key>
-	<integer>13</integer>
-	<key>CloseBoxInsetY</key>
-	<integer>13</integer>
 	<key>MainHTML</key>
 	<string>LaterDude.html</string>
 </dict>
