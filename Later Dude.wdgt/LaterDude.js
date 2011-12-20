@@ -163,6 +163,7 @@ $(function(){
     events : {
       'mouseover' : 'showInfoButton',
       'mouseout' : 'hideInfoButton',
+      'mousedown #resize' : 'startResize',
       'click #info-button-rollie' : 'showBack',
       'click #open-all' : 'openAll',
       'dragenter' : 'setDropEffect', // To actually set the `dropEffect`.
@@ -174,6 +175,8 @@ $(function(){
     collection : new CollectionOfItems,
 
     initialize : function() {
+
+    this.growboxInset = {};
 
     // Setting up the #scroll-area.
     this.scrollbar = new AppleVerticalScrollbar(this.$('#scrollbar')[0]),
@@ -200,6 +203,50 @@ $(function(){
 
     hideInfoButton : function () {
       this.$('#info-button').css('opacity','0.0');
+    },
+
+    // Assign `x` and `y` to `this.growboxInset`
+    // and add event listeners to document for live resizing.
+    startResize : function (e) {
+      $(document).on('mousemove', _.bind(this.resize,this));
+      $(document).on('mouseup', this.stopResize);
+      var body = $('body');
+      this.growboxInset = {x:(body.width() - e.pageX), y:(body.height() - e.pageY)};
+      e.stopPropagation();
+      e.preventDefault();
+    },
+
+    // Resize body, *front* elements and window during
+    // live resizing.
+    resize : function (e) {
+      var x = e.pageX + this.growboxInset.x;
+      var y = e.pageY + this.growboxInset.y;
+
+      //if (x<380) x = 380;
+      if (y<180) y = 180;
+      var body = $('body');
+      var front = this.el;
+      //body.width(x);
+      body.height(y);
+      //front.width(x+10);
+      front.height(y+10);
+      this.$('#scrollbar').css('height',y-35);
+      this.$('#scroll-area').css('height',y-35);
+      //$('body').width: x, height: y});
+      window.resizeTo(400, y+20);
+      this.scrollAreaRefresh();
+
+      e.stopPropagation();
+      e.preventDefault();
+    },
+
+    // Remove resizing event listeners.
+    stopResize : function (e) {
+      $(document).off('mousemove');
+      $(document).off('mouseup');
+
+      e.stopPropagation();
+      e.preventDefault();
     },
 
     // Transitions between widget's *front* and *back* are
