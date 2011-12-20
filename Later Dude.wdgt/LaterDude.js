@@ -163,7 +163,6 @@ $(function(){
     events : {
       'mouseover' : 'showInfoButton',
       'mouseout' : 'hideInfoButton',
-      'mousedown #resize' : 'startResize',
       'click #info-button-rollie' : 'showBack',
       'click #open-all' : 'openAll',
       'dragenter' : 'setDropEffect', // To actually set the `dropEffect`.
@@ -203,52 +202,6 @@ $(function(){
 
     hideInfoButton : function () {
       this.$('#info-button').css('opacity','0.0');
-    },
-
-    // Assign `x` and `y` to `this.growboxInset`
-    // and add event listeners to document for live resizing.
-    startResize : function (e) {
-      $(document).on('mousemove', _.bind(this.resize,this));
-      $(document).on('mouseup', this.stopResize);
-      var body = $('body');
-      this.growboxInset = {x:(body.width() - e.pageX), y:(body.height() - e.pageY)};
-      e.stopPropagation();
-      e.preventDefault();
-    },
-
-    // Resize body, *front* elements and window during
-    // live resizing.
-    resize : function (e) {
-      var x = e.pageX + this.growboxInset.x;
-      var y = e.pageY + this.growboxInset.y;
-
-      //if (x<380) x = 380;
-      if (y<180) y = 180;
-      var body = $('body');
-      var back = $('#back');
-      var front = this.el;
-      //body.width(x);
-      body.height(y);
-      //front.width(x+10);
-      front.height(y+10);
-      back.height(y+10);
-      this.$('#scrollbar').css('height',y-35);
-      this.$('#scroll-area').css('height',y-35);
-      //$('body').width: x, height: y});
-      window.resizeTo(400, y+20);
-      this.scrollAreaRefresh();
-
-      e.stopPropagation();
-      e.preventDefault();
-    },
-
-    // Remove resizing event listeners.
-    stopResize : function (e) {
-      $(document).off('mousemove');
-      $(document).off('mouseup');
-
-      e.stopPropagation();
-      e.preventDefault();
     },
 
     // Transitions between widget's *front* and *back* are
@@ -430,9 +383,69 @@ $(function(){
   // opening URIs and initiates the start-up process.
   window.LaterDude = Backbone.View.extend({
 
+    el : $('body'),
+
+    events : {
+      'mousedown #resize' : 'startResize'
+    },
+
     back : new BackView,
 
     front : new FrontView,
+
+    // Assign `x` and `y` to `this.growboxInset`
+    // and add event listeners to document for live resizing.
+    startResize : function (e) {
+      $(document).on('mousemove', _.bind(this.resize,this));
+      $(document).on('mouseup', this.stopResize);
+      this.growboxInset = {x:(this.el.width() - e.pageX), y:(this.el.height() - e.pageY)};
+      e.stopPropagation();
+      e.preventDefault();
+    },
+
+    // Resize body, *front* elements and window during
+    // live resizing.
+    resize : function (e) {
+      var x = e.pageX + this.growboxInset.x;
+      var y = e.pageY + this.growboxInset.y;
+
+      if (y<180) y = 180;
+      this.saveBodyHeight(y);
+      this.setHeight(y);
+
+      e.stopPropagation();
+      e.preventDefault();
+    },
+
+    // Remove resizing event listeners.
+    stopResize : function (e) {
+      $(document).off('mousemove');
+      $(document).off('mouseup');
+
+      e.stopPropagation();
+      e.preventDefault();
+    },
+
+    // Save the `body` DOM elements' height.
+    saveBodyHeight : function (y) {
+      if (window.widget) {
+        widget.setPreferenceForKey(y, 'bodyHeight_' + widget.identifier);
+      }
+      else {
+        // TODO Implement localStorage analogue.
+      }
+    },
+
+    // Set widget's height.
+    setHeight : function (y) {
+      this.el.height(y);
+      this.front.el.height(y+10);
+      this.back.el.height(y+10);
+      this.front.$('#scrollbar').css('height', y-35);
+      this.front.$('#scroll-area').css('height', y-35);
+      window.resizeTo(400, y+20);
+      this.front.scrollAreaRefresh();
+    },
 
     initialize : function() {
       // Obviously we do not want to refence the `widget object, if it is
@@ -489,8 +502,13 @@ $(function(){
 
         widget.onremove = function () {
           widget.setPreferenceForKey(null, 'items' + '_' + widget.identifier);
+          widget.setPreferenceForKey(null, 'bodyHeight_' + widget.identifier);
         };
 
+        // TODO implement localStorage analogue in `else` case.
+        var predefinedHeight = widget.preferenceForKey('bodyHeight_' + widget.identifier);
+        if (predefinedHeight)
+          this.setHeight(predefinedHeight);
       }
       // The non-widget/browser case:
       else {
@@ -518,7 +536,6 @@ $(function(){
       // Listen for the need to transition between *front* and *back*
       this.front.bind('showBack', this.showBack, this);
       this.back.bind('showFront', this.showFront, this);
-
     }
 
   });
