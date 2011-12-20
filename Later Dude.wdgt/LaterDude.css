@@ -39,8 +39,8 @@ body {
 */
 #scroll-wrapper {
   position: absolute;
-  top: 25px;
-  left: -10px;
+  top: 20px;
+  left: -15px;
 }
 
 #scroll-area{
@@ -153,8 +153,8 @@ ul {
 
 #info-button {
   position: absolute;
-  bottom: 19px;
-  left: 17px;
+  bottom: 10px;
+  left: 10px;
 
   /*
     Dimensions of info-button.png/info-button-rollie.png.
@@ -179,8 +179,8 @@ ul {
 
 #info-button-rollie {
   position: absolute;
-  bottom: 19px;
-  left: 17px;
+  bottom: 10px;
+  left: 10px;
 
   /*
     Dimensions of info-button.png/info-button-rollie.png.
@@ -198,7 +198,7 @@ ul {
 #activity-indicator {
   opacity: 0.6;
   position: absolute;
-  bottom: 15px;
+  bottom: 5px;
   left: 192px;
   -webkit-margin-top-collapse: separate;
   -webkit-margin-bottom-collapse: separate;
