@@ -17,9 +17,6 @@ body {
   top: 0px;
   left: 0px;
 
-  /*
-    Dimensions of Default.png/front.png/back.png.
-  */
   width: 390px;
   height: 190px;
 
@@ -326,15 +323,13 @@ ul {
   top: 0px;
   left: 0px;
 
-  /*
-    Dimensions of Default.png/front.png/back.png.
-  */
-  width: 400px;
-  height: 200px;
-  background: url(Images/back.png) no-repeat 0 0;
+  width: 390px;
+  height: 190px;
+  background: url(Images/back.jpg) repeat 0 0;
+  border-radius: 12px;
+  box-shadow: inset -1px -6px 10px rgba(0,0,0,0.1111);
   display: none;
 }
-
 
 #done-button {
   position: absolute;

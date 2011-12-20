@@ -225,11 +225,13 @@ $(function(){
       //if (x<380) x = 380;
       if (y<180) y = 180;
       var body = $('body');
+      var back = $('#back');
       var front = this.el;
       //body.width(x);
       body.height(y);
       //front.width(x+10);
       front.height(y+10);
+      back.height(y+10);
       this.$('#scrollbar').css('height',y-35);
       this.$('#scroll-area').css('height',y-35);
       //$('body').width: x, height: y});
