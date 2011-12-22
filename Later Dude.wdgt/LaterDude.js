@@ -412,12 +412,13 @@ $(function(){
       if (y<180) y = 180;
       this.saveBodyHeight(y);
       this.setHeight(y);
+      window.widget && window.resizeTo(400, y+20);
 
       e.stopPropagation();
       e.preventDefault();
     },
 
-    // Remove resizing event listeners.
+    // Remove (resizing) mouse event listeners.
     stopResize : function (e) {
       $(document).off('mousemove');
       $(document).off('mouseup');
@@ -428,23 +429,68 @@ $(function(){
 
     // Save the `body` DOM elements' height.
     saveBodyHeight : function (y) {
-      if (window.widget) {
+      if (window.widget)
         widget.setPreferenceForKey(y, 'bodyHeight_' + widget.identifier);
-      }
-      else {
-        // TODO Implement localStorage analogue.
-      }
+      else
+        localStorage.setItem('bodyHeight', y);
     },
 
-    // Set widget's height.
+    // Set widget's height. Note that this does not set the
+    // height of the `window` object.
     setHeight : function (y) {
       this.el.height(y);
       this.front.el.height(y+10);
       this.back.el.height(y+10);
-      this.front.$('#scrollbar').css('height', y-35);
-      this.front.$('#scroll-area').css('height', y-35);
-      window.resizeTo(400, y+20);
+      this.front.$('#scroll-wrapper').children().css('height', y-35);
       this.front.scrollAreaRefresh();
+    },
+
+    showFront : function () {
+      window.widget && widget.prepareForTransition('ToFront');
+      this.front.el.show();
+      this.back.el.hide();
+      window.widget && setTimeout('widget.performTransition();', 0);
+        // TODO This is messy.
+        // In case our *front* view has not removed it,
+        // let it spin again!
+      this.front.$('#activity-indicator') && this.front.$('#activity-indicator').css('-webkit-animation-name','activity-indicator');
+      this.bodyHeight > 180 && setTimeout(_.bind(function(){
+        this.animateResize(this.bodyHeight, 500);
+      }, this), window.widget && 600);
+    },
+
+    showBack : function () {
+        // TODO This is messy.
+        // The transition animation fails, if the `activityIndicator
+        // is spinning.
+      this.front.$('#activity-indicator') && this.front.$('#activity-indicator').css('-webkit-animation-name','');
+
+      this.bodyHeight = this.el.height();
+      if (this.bodyHeight > 180) {
+        this.animateResize(180, 500);
+        setTimeout(_.bind(function(){this.performTransitionToBack();}, this), 500);
+      }
+      else this.performTransitionToBack();
+    },
+
+    performTransitionToBack : function () {
+      window.widget && widget.prepareForTransition('ToBack');
+      this.back.el.show();
+      this.front.el.hide();
+      setTimeout(_.bind(function(){
+        window.widget && widget.performTransition();
+        clearInterval(this._scrollRefreshInterval);
+      }, this), 0);
+    },
+
+    animateResize : function (bodyHeight, milliSeconds) {
+      $('body, #front, #scroll-area, #scrollbar').css({'-webkit-transition-property' : 'height', '-webkit-transition-duration' : milliSeconds+'ms'});
+      this._scrollRefreshInterval = setInterval(_.bind(function(){this.front.scrollAreaRefresh();}, this), 10);
+      this.setHeight(bodyHeight);
+      setTimeout(_.bind(function(){
+        $('body, #front, #scroll-area, #scrollbar').css({'-webkit-transition-property' : '', '-webkit-transition-duration' : ''});
+        clearInterval(this._scrollRefreshInterval);
+      }, this), milliSeconds);
     },
 
     initialize : function() {
@@ -452,6 +498,12 @@ $(function(){
       // not present. This also enables us to default to running in a
       // browser (see `else case below).
       if (window.widget) {
+        // Remove widget's preference file, when removing the widget from the *Dashboard*.
+        widget.onremove = function () {
+          widget.setPreferenceForKey(null, 'items_' + widget.identifier);
+          widget.setPreferenceForKey(null, 'bodyHeight_' + widget.identifier);
+        };
+
         // For `widget.system()` to run in async mode we need a NON-`null` handler.
         this.widgetSystemHandler = function (object) {
           // Use the following for debugging widget behavior which involves `widget.system calls like so
@@ -474,41 +526,6 @@ $(function(){
           else
             widget.openURL(uri);
         };
-
-        this.showFront = function () {
-          widget.prepareForTransition('ToFront');
-          this.front.el.show();
-          this.back.el.hide();
-          setTimeout('widget.performTransition();', 0);
-            // TODO This is messy.
-            // In case our *front* view has not removed it,
-            // let it spin again!
-            //
-          this.front.$('#activity-indicator') && this.front.$('#activity-indicator').css('-webkit-animation-name','activity-indicator');
-        };
-
-        this.showBack = function () {
-          // TODO This is messy.
-          // The transition animation fails, if the `activityIndicator
-          // is spinning.
-          //
-          this.front.$('#activity-indicator') && this.front.$('#activity-indicator').css('-webkit-animation-name','');
-
-          widget.prepareForTransition('ToBack');
-          this.back.el.show();
-          this.front.el.hide();
-          setTimeout('widget.performTransition();', 0);
-        };
-
-        widget.onremove = function () {
-          widget.setPreferenceForKey(null, 'items' + '_' + widget.identifier);
-          widget.setPreferenceForKey(null, 'bodyHeight_' + widget.identifier);
-        };
-
-        // TODO implement localStorage analogue in `else` case.
-        var predefinedHeight = widget.preferenceForKey('bodyHeight_' + widget.identifier);
-        if (predefinedHeight)
-          this.setHeight(predefinedHeight);
       }
       // The non-widget/browser case:
       else {
@@ -516,16 +533,6 @@ $(function(){
           // For debugging:
           // console.log(uri);
           window.open(uri); // Of course POP-UPs would have to be "unblocked"
-        };
-
-        this.showFront = function () {
-          this.front.el.show();
-          this.back.el.hide();
-        };
-
-        this.showBack = function () {
-          this.back.el.show();
-          this.front.el.hide();
         };
       }
 
@@ -536,6 +543,13 @@ $(function(){
       // Listen for the need to transition between *front* and *back*
       this.front.bind('showBack', this.showBack, this);
       this.back.bind('showFront', this.showFront, this);
+
+      // Set up the widget's height.
+      var predefinedBodyHeight = window.widget ? widget.preferenceForKey('bodyHeight_' + widget.identifier) : parseInt(localStorage.getItem('bodyHeight'));
+        if (predefinedBodyHeight) {
+          this.setHeight(predefinedBodyHeight);
+          window.widget && window.resizeTo(this.el.width()+20, predefinedBodyHeight+20);
+        }
     }
 
   });
