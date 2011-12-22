@@ -161,8 +161,6 @@ $(function(){
 
     // The DOM events specific to the *front*.
     events : {
-      'mouseover' : 'showInfoButton',
-      'mouseout' : 'hideInfoButton',
       'click #info-button-rollie' : 'showBack',
       'click #open-all' : 'openAll',
       'dragenter' : 'setDropEffect', // To actually set the `dropEffect`.
@@ -196,14 +194,6 @@ $(function(){
       this.scrollArea.refresh();
     },
 
-    showInfoButton : function () {
-      this.$('#info-button').css('opacity','1.0');
-    },
-
-    hideInfoButton : function () {
-      this.$('#info-button').css('opacity','0.0');
-    },
-
     // Transitions between widget's *front* and *back* are
     // coordinated by our instance of **LaterDude** View.
     // See `showBack()` of **LaterDude** View.
@@ -234,10 +224,6 @@ $(function(){
       // Prevent default drop behavior on some browsers,
       // not needed for the *Dashboard*.
       e.originalEvent.stopPropagation();
-
-      // `mousemove` and `mouseover` are not fired unless user moves cursor after `drop,
-      // but the `infoButton should appear, since the cursor was already moved over the widget.
-      this.showInfoButton();
 
       // Add the spinning wheel.
       this.el.append(
