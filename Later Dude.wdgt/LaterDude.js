@@ -459,6 +459,8 @@ $(function(){
       else this.performTransitionToBack();
     },
 
+    // Actually perform transition to *back* with the widget
+    // having the default height.
     performTransitionToBack : function () {
       window.widget && widget.prepareForTransition('ToBack');
       this.back.el.show();
@@ -469,6 +471,7 @@ $(function(){
       }, this), 0);
     },
 
+    // Animate vertical resizing of the widget using CSS.
     animateResize : function (bodyHeight, milliSeconds) {
       $('body, #front, #scroll-area, #scrollbar').css({'-webkit-transition-property' : 'height', '-webkit-transition-duration' : milliSeconds+'ms'});
       this._scrollRefreshInterval = setInterval(_.bind(function(){this.front.scrollAreaRefresh();}, this), 10);
