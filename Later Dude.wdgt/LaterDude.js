@@ -161,7 +161,7 @@ $(function(){
 
     // The DOM events specific to the *front*.
     events : {
-      'click #info-button-rollie' : 'showBack',
+      'click #info-button' : 'showBack',
       'click #open-all' : 'openAll',
       'dragenter' : 'setDropEffect', // To actually set the `dropEffect`.
       'dragover' : 'setDropEffect', // To constantly `preventDefault()`.

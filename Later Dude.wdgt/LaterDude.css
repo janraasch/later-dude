@@ -152,49 +152,21 @@ ul {
   position: absolute;
   bottom: 10px;
   left: 10px;
-
-  /*
-    Dimensions of info-button.png/info-button-rollie.png.
-  */
-  width: 13px;
-  height: 13px;
-  background: url(Images/info-button.png);
   opacity: 0;
-
-  /*
-    Webkit CSS Fade-In/Out Animation.
-  */
   transition-property: opacity;
   transition-duration: 400ms;
-  -moz-transition-property: opacity;
-  -moz-transition-duration: 400ms;
-  -o-transition-property: opacity;
-  -o-transition-duration: 400ms;
   -webkit-transition-property: opacity;
   -webkit-transition-duration: 400ms;
 }
 
-body:hover #info-button {
-  opacity: 1;
-}
-
-#info-button-rollie {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-
-  /*
-    Dimensions of info-button.png/info-button-rollie.png.
-  */
-  width: 13px;
-  height: 13px;
-  opacity: 0.25;
-}
-
-  #info-button-rollie:hover {
-    background: url(Images/info-button-rollie.png);
+  body:hover #info-button {
+    opacity: 1;
   }
 
+  #info-button:hover {
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.25);
+  }
 
 #activity-indicator {
   opacity: 0.6;
