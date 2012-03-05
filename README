@@ -9,5 +9,6 @@ and to be dragged again with the URI information attached.
 
 Version History
 ===============
+v1.2 - Add design option "Later Dudette".
 v1.1 - Add (vertical) resizing. More CSS, less JavaScript.
 v1.0 - Initial release.
