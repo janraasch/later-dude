@@ -20,15 +20,21 @@ body {
   width: 390px;
   height: 190px;
 
-  /*
-    CSS linear-gradient and box-shadow instead of front.png
-  */
   border-radius: 12px;
-  background-image: linear-gradient(rgb(235,235,235),rgb(157,157,157));
-  background-image: -moz-linear-gradient(rgb(235,235,235),rgb(157,157,157));
-  background-image: -webkit-linear-gradient(rgb(235,235,235),rgb(157,157,157));
   box-shadow: inset -1px -6px 10px rgba(0,0,0,0.1111);
 }
+
+  #front.dude {
+    background-image: linear-gradient(rgb(235,235,235),rgb(157,157,157));
+    background-image: -moz-linear-gradient(rgb(235,235,235),rgb(157,157,157));
+    background-image: -webkit-linear-gradient(rgb(235,235,235),rgb(157,157,157));
+  }
+
+  #front.dudette {
+    background-image: linear-gradient(rgb(255,208,251),rgb(255,156,246));
+    background-image: -moz-linear-gradient(rgb(255,208,251),rgb(255,156,246));
+    background-image: -webkit-linear-gradient(rgb(255,180,251),rgb(255,102,246));
+  }
 
 
 /*
@@ -40,7 +46,7 @@ body {
   left: -15px;
 }
 
-#scroll-area{
+#scroll-area {
   float: left;
   white-space: nowrap;
   width: 348px; /* Yes, exactly 348px says my eye... :D */
@@ -97,10 +103,17 @@ ul {
     background-color: rgb(204,204,204);
   }
 
+    .dude #item-list li:-webkit-drag {
+      background-color: rgb(204,204,204);
+    }
+
+    .dudette #item-list li:-webkit-drag {
+      background-color: rgb(255,181,251);
+    }
+
     #item-list li:-webkit-drag .title {
       width: 270px;
     }
-
 
   /*
     Styling for the actual item, i.e. title, uri, item-destroy button
@@ -111,12 +124,30 @@ ul {
     color: rgb(0,153,204);
   }
 
+      .dude #item-list .title {
+        color: rgb(0,153,204);
+      }
+
+      .dudette #item-list .title {
+        color: rgb(0,0,0);
+      }
+
   #item-list input {
     padding: 3px;
-      border: 1px solid rgb(0,153,204);
-      outline: none;
+    outline: none;
     width:275px;
   }
+
+    /*
+      Border color as in #item-list .title
+    */
+    .dude #item-list input {
+      border: 1px solid rgb(0,153,204);
+    }
+
+    .dudette #item-list input {
+      border: 1px solid rgb(0,0,0);
+    }
 
   #item-list .uri {
     clear: left;
@@ -132,12 +163,19 @@ ul {
       cursor: pointer;
 
       /*
-      height * 2 = height of Destroy.png.
-    */
+        height * 2 = height of destroy-dude/dudette.png.
+      */
       width: 20px;
       height: 20px;
-      background: url(Images/destroy.png) no-repeat 0 0;
     }
+
+      .dude #item-list .item-destroy {
+        background: url(Images/destroy-dude.png) no-repeat 0 0;
+      }
+
+      .dudette #item-list .item-destroy {
+        background: url(Images/destroy-dudette.png) no-repeat 0 0;
+      }
 
   #item-list li:hover .item-destroy {
       display: block;
@@ -273,19 +311,20 @@ ul {
     bottom: 10px;
     right: 10px;
     -apple-dashboard-region: dashboard-region(control rectangle);
+    cursor: row-resize;
 }
 
 #open-all {
   position: absolute;
   top: 5px;
-  left: 150px;
+  left: 180px;
   font: 11px "Lucida Grande";
 
   /*
-    The color is the same as the background.
+    Transparent
     => Hidden feature :D
   */
-  color: rgb(235,235,235);
+  color: rgba(0,0,0,0);
   cursor: pointer;
 }
 
@@ -298,6 +337,10 @@ ul {
   position: absolute;
   top: 0px;
   left: 0px;
+  text-align: center;
+  color: rgb(255,255,255);
+  font-weight: bold;
+  font-size: 10px;
 
   width: 390px;
   height: 190px;
@@ -323,15 +366,17 @@ ul {
     background: url(Images/done-button-clicked.png) no-repeat 0 0;
   }
 
+#gender {
+  position: absolute;
+  top: 35px;
+  left: 60px;
+  -apple-dashboard-region: dashboard-region(control rectangle);
+}
 
 #version {
   position: absolute;
   top: 65px;
   left: 65px;
-  text-align: center;
-  color: rgb(255,255,255);
-  font-weight: bold;
-  font-size: 10px;
 }
 
   #version img {
