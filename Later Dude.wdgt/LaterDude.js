@@ -201,6 +201,11 @@ $(function(){
       this.trigger('showBack');
     },
 
+    // Toggle color scheme of widget's *front*
+    toggleGender : function () {
+      this.el.toggleClass('dude dudette');
+    },
+
     // URI opening is handled by **LaterDude** View.
     // See `openURI()` of **LaterDude** View.
     openAll : function () {
@@ -343,7 +348,8 @@ $(function(){
 
     events : {
       'click #version' : 'openHomepage',
-      'mouseup #done-button': 'showFront'
+      'mouseup #done-button' : 'showFront',
+      'change form' : 'toggleGender'
     },
 
     // URI opening is handled by widget's instance of **LaterDude** View.
@@ -357,6 +363,16 @@ $(function(){
     // See `showFront()` of **LaterDude** View.
     showFront : function() {
       this.trigger('showFront');
+    },
+
+    toggleGender : function() {
+      if(window.widget) {
+        widget.setPreferenceForKey(widget.preferenceForKey('gender_' + widget.identifier) === 'dudette' ? 'dude' : 'dudette', 'gender_' + widget.identifier);
+      }
+      else {
+        localStorage.setItem('gender', localStorage.getItem('gender') === 'dudette' ? 'dude' : 'dudette');
+      }
+      this.trigger('toggleGender');
     }
 
   });
@@ -482,6 +498,10 @@ $(function(){
       }, this), milliSeconds);
     },
 
+    // TODO
+    // Have The **LaterDude** View handle all storage requests:
+    // Items, height, gender. (Add height an gender properties to **Store**.)
+
     initialize : function() {
       // Obviously we do not want to refence the `widget object, if it is
       // not present. This also enables us to default to running in a
@@ -491,6 +511,7 @@ $(function(){
         widget.onremove = function () {
           widget.setPreferenceForKey(null, 'items_' + widget.identifier);
           widget.setPreferenceForKey(null, 'bodyHeight_' + widget.identifier);
+          widget.setPreferenceForKey(null, 'gender_' + widget.identifier);
         };
 
         // For `widget.system()` to run in async mode we need a NON-`null` handler.
@@ -533,11 +554,21 @@ $(function(){
       this.front.bind('showBack', this.showBack, this);
       this.back.bind('showFront', this.showFront, this);
 
+      // Handling gender changes: Later Dude <=> Later Dudette
+      this.back.bind('toggleGender', this.front.toggleGender, this.front);
+
       // Set up the widget's height.
       var predefinedBodyHeight = window.widget ? widget.preferenceForKey('bodyHeight_' + widget.identifier) : parseInt(localStorage.getItem('bodyHeight'));
         if (predefinedBodyHeight) {
           this.setHeight(predefinedBodyHeight);
           window.widget && window.resizeTo(this.el.width()+20, predefinedBodyHeight+20);
+        }
+
+      // Set up widget's gender.
+      var predefinedGender = window.widget ? widget.preferenceForKey('gender_' + widget.identifier) : localStorage.getItem('gender');
+        if (predefinedGender === 'dudette') {
+          this.back.$('#dudette').attr('checked','checked');
+          this.front.el.toggleClass('dude dudette');
         }
     }
 
