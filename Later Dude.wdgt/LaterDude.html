@@ -3,7 +3,7 @@
 
 <head>
 
-  <title>Later Dude v1.1</title>
+  <title>Later Dude v1.2</title>
 
   <!-- Apple JavaScript classes -->
   <script src="AppleClasses/AppleScrollArea.js" charset="utf-8"></script>
@@ -25,7 +25,7 @@
 
   <!-- Later Dude Interface -->
 
-  <div id="front">
+  <div id="front" class="dude">
 
     <div id="open-all">Open All</div>
 
@@ -49,10 +49,18 @@
 
   <div id="back">
 
+    <form id="gender">
+      <input type="radio" name="gender" id="dudette" value="Later Dudette"/>
+      <label for="dudette">Later Dudette</label>
+      <input type="radio" name="gender" id="dude" value="Later Dude" checked="checked"/>
+      <label for="dude">Later Dude</label>
+    </form>
+
     <div id="version">
       <img src="Images/developed-without.png" alt="Created by Jan Raasch"/>
-      Later Dude v1.1
+      Later Dude v1.2
     </div>
+
     <div id="done-button"></div>
 
   </div>
