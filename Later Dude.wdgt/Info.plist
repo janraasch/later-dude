@@ -9,7 +9,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Later Dude</string>
 	<key>CFBundleVersion</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>CFBundleIdentifier</key>
 	<string>de.janpunktde.widget.laterdude</string>
 	<key>BackwardsCompatibleClassLookup</key>
