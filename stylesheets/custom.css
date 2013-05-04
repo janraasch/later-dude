@@ -15,3 +15,7 @@ img[title=laterdudedemo1] {
 #downloads {
     width: 110px;
 }
+
+p.img-container {
+    text-align: center;
+}
