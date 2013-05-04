@@ -1,4 +1,8 @@
-img[title=laterdude], img [title=laterdudedemo2] {
+body {
+    background: rgb(240, 240, 240);
+}
+
+img[title=laterdude], img[title=laterdudedemo2] {
     width: 410px;
     height: 210px;
 }
